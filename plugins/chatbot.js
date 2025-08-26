@@ -91,6 +91,6 @@ plugin({
   } else {
     return await message.send('*_Invalid command. Type `chatbot` to see help._*');
   }
-  await personalDB(['chatbot'], { content: current }, 'set');
+  await personalDB(['chatbot'], { jid: message.sender, content: current }, 'set');
   return await message.send('*_Chatbot settings updated._*');
 });
