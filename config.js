@@ -70,7 +70,8 @@ module.exports = {
     : new Sequelize({
         dialect: 'sqlite',
         storage: './database.db',
-        logging: false
+        logging: false,
+        sync: { force: false, alter: true }
       })
 };
 
