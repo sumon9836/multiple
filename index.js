@@ -75,8 +75,18 @@ app.get("/pair", async (req, res) => {
   if (!num) return res.send({ error: "Please provide ?number=XXXXXXXXXX" });
 
   num = num.replace(/[^0-9]/g, ""); // clean number
+  
+  // Validate number format
+  if (num.length < 10 || num.length > 15) {
+    return res.send({ error: "Invalid phone number format" });
+  }
 
   try {
+    // Ensure session directory exists
+    const sessionPath = path.join(__dirname, "sessions", num);
+    if (!fs.existsSync(sessionPath)) {
+      fs.mkdirSync(sessionPath, { recursive: true });
+    }
     const { state, saveCreds } = await useMultiFileAuthState(`./sessions/${num}`);
     let sock = makeWASocket({
       auth: {
