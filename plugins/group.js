@@ -123,12 +123,14 @@ plugin({
 	formMe: mode,
 	desc: 'mute group'
 }, async (message, match) => {
-	 if (!message.isGroup)
-      return await message.reply("*_This command is for groups_*");
-  if (!await isAccess(message)) {
+	if (!message.isGroup)
+		return await message.reply("*_This command is for groups_*");
+	if (!await isAccess(message)) {
 		return await message.send('*_Only bot owner and group admins can use this command_*');
 	}
-	if (!await isBotAdmin(message)) return await message.send('_bot must be admin first_', )
+	if (!await isBotAdmin(message)) return await message.send('_bot must be admin first_', {
+		linkPreview: linkPreview()
+	})
 	await message.client.groupSettingUpdate(message.jid, 'announcement');
 	return await message.send('_group muted_', {
 		linkPreview: linkPreview()

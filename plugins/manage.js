@@ -328,25 +328,28 @@ plugin({
 }, async (message, match) => {
     if (!message.isGroup)
       return await message.reply("*_This command is for groups_*");
-  if (!await isAccess(message)) {
-		return await message.send('*_Only bot owner and group admins can use this command_*');
-  }
+    if (!await isAccess(message)) {
+      return await message.send('*_Only bot owner and group admins can use this command_*');
+    }
     if (!match) return await message.reply("_*antibot* on/off_\n_*antibot* action warn/kick/null_");
+    
+    const actions = ['null', 'warn', 'kick'];
     const {antibot} = await groupDB(['bot'], {jid: message.jid, content: {}}, 'get');
+    
     if(match.toLowerCase() == 'on') {
-    	const action = antibot && antibot.action ? antibot.action : 'null';
-        await groupDB(['bot'], {jid: message.jid, content: {status: 'true', action }}, 'set');
-        return await message.send(`_antibot Activated with action null_\n_*antibot action* warn/kick/null for chaning actions_`)
+      const action = antibot && antibot.action ? antibot.action : 'null';
+      await groupDB(['bot'], {jid: message.jid, content: {status: 'true', action }}, 'set');
+      return await message.send(`_antibot Activated with action ${action}_\n_*antibot action* warn/kick/null for changing actions_`)
     } else if(match.toLowerCase() == 'off') {
-    	const action = antibot && antibot.action ? antibot.action : 'null';
-        await groupDB(['bot'], {jid: message.jid, content: {status: 'false', action }}, 'set')
-        return await message.send(`_antibot deactivated_`)
+      const action = antibot && antibot.action ? antibot.action : 'null';
+      await groupDB(['bot'], {jid: message.jid, content: {status: 'false', action }}, 'set')
+      return await message.send(`_antibot deactivated_`)
     } else if(match.toLowerCase().match('action')) {
-    	const status = antibot && antibot.status ? antibot.status : 'false';
-        match = match.replace(/action/gi,'').trim();
-        if(!actions.includes(match)) return await message.send('_action must be warn,kick or null_')
-        await groupDB(['bot'], {jid: message.jid, content: {status, action: match }}, 'set')
-        return await message.send(`_AntiBot Action Updated_`);
+      const status = antibot && antibot.status ? antibot.status : 'false';
+      match = match.replace(/action/gi,'').trim();
+      if(!actions.includes(match)) return await message.send('_action must be warn,kick or null_')
+      await groupDB(['bot'], {jid: message.jid, content: {status, action: match }}, 'set')
+      return await message.send(`_AntiBot Action Updated_`);
     }
 });
 

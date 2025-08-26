@@ -1,5 +1,5 @@
-const { plugin, groupDB, isAdmin, isAccess, config } = require('../lib');
 
+const { plugin, groupDB, isAdmin, isAccess, config } = require('../lib');
 
 plugin(
   {
@@ -11,9 +11,9 @@ plugin(
   async (message, match) => {
     if (!message.isGroup)
       return await message.reply("*_This command is for groups_*");
-  if (!await isAccess(message)) {
-		return await message.send('*_Only bot owner and group admins can use this command_*');
-  }
+    if (!await isAccess(message)) {
+      return await message.send('*_Only bot owner and group admins can use this command_*');
+    }
     match = (match || '').trim();
     
     const { welcome } =
@@ -72,9 +72,9 @@ plugin(
   async (message, match) => {
     if (!message.isGroup)
       return await message.reply("*_This command is for groups_*");
-  if (!await isAccess(message)) {
-		return await message.send('*_Only bot owner and group admins can use this command_*');
-  }
+    if (!await isAccess(message)) {
+      return await message.send('*_Only bot owner and group admins can use this command_*');
+    }
     match = (match || '').trim();
 
     const { exit } =
@@ -85,7 +85,7 @@ plugin(
     if (match.toLowerCase() === 'get') {
       if (status === 'false') {
         return await message.send(
-          `_*Example:* exit Goodbye &mention_\n_status: off_\nVisit ${config.BASE_URL}info/exit_`
+          `_*Example:* goodbye Goodbye &mention_\n_status: off_\nVisit ${config.BASE_URL}info/exit_`
         );
       }
       return await message.send(`_*Goodbye Message:*_\n${currentMsg}`);
@@ -118,7 +118,7 @@ plugin(
     }
 
     return await message.send(
-      '_Example:_\nexit Goodbye &mention\nexit on/off/get\nSupports: &mention, &pp, &name, &size'
+      '_Example:_\ngoodbye Goodbye &mention\ngoodbye on/off/get\nSupports: &mention, &pp, &name, &size'
     );
   }
 );
