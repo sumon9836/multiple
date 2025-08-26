@@ -17,8 +17,8 @@ if (!message.isGroup)
     const lowerMatch = rawMatch?.toLowerCase();
     const actions = ['null', 'warn', 'kick'];
 
-    let data = await groupDB(['word'], { jid: message.jid }, 'get');
-    let current = data.word || {
+    let data = await groupDB(['word'], { jid: message.jid, content: {} }, 'get');
+    let current = data?.word || {
         status: 'false',
         action: 'null',
         words: [],
@@ -163,8 +163,8 @@ plugin({
   if (!await isAccess(message)) {
 		return await message.send('*_Only bot owner and group admins can use this command_*');
   }
-    const data = await groupDB(['link'], { jid: message.jid }, 'get');
-    const current = data.link || {
+    const data = await groupDB(['link'], { jid: message.jid, content: {} }, 'get');
+    const current = data?.link || {
         status: 'false',
         action: 'null',
         not_del: [],

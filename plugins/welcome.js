@@ -16,8 +16,8 @@ plugin(
     }
     match = (match || '').trim();
     
-    const { welcome } =
-      (await groupDB(['welcome'], { jid: message.jid, content: {} }, 'get')) || {};
+    const data = await groupDB(['welcome'], { jid: message.jid, content: {} }, 'get');
+    const welcome = data?.welcome || {};
     const status = welcome?.status === 'true' ? 'true' : 'false';
     const currentMsg = welcome?.message || '';
 
@@ -77,8 +77,8 @@ plugin(
     }
     match = (match || '').trim();
 
-    const { exit } =
-      (await groupDB(['exit'], { jid: message.jid, content: {} }, 'get')) || {};
+    const data = await groupDB(['exit'], { jid: message.jid, content: {} }, 'get');
+    const exit = data?.exit || {};
     const status = exit?.status === 'true' ? 'true' : 'false';
     const currentMsg = exit?.message || '';
 
