@@ -24,7 +24,7 @@ plugin({
     excludeJids: []
   };
  try {
-    const data = await personalDB(['chatbot'], {}, 'get');
+    const data = await personalDB(['chatbot'], { jid: message.sender }, 'get');
     if (data && data.chatbot) {
       current = typeof data.chatbot === 'object'
         ? data.chatbot

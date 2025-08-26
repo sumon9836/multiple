@@ -24,13 +24,13 @@ plugin({
   const input = match?.trim().toLowerCase();
 
   if (input === 'on') {
-    await personalDB(['autostatus'], { content: 'true' }, 'set');
+    await personalDB(['autostatus'], { jid: message.sender, content: 'true' }, 'set');
     return await message.send('*Auto status seen is now `ON`*');
   } else if (input === 'off') {
-    await personalDB(['autostatus'], { content: 'false' }, 'set');
+    await personalDB(['autostatus'], { jid: message.sender, content: 'false' }, 'set');
     return await message.send('*Auto status seen is now `OFF`*');
   } else {
-    const data = await personalDB(['autostatus'], {}, 'get');
+    const data = await personalDB(['autostatus'], { jid: message.sender }, 'get');
     const status = data.autostatus === 'true';
     return await message.send(
       `*Auto Status Seen:*\nStatus: ${status ? 'ON' : 'OFF'}\n\nUse:\n• astatus on\n• astatus off`

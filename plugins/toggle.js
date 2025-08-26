@@ -14,7 +14,7 @@ plugin({
         type: 'misc',
 }, async (message, match) => {
         if (match == 'list') {
-                const {toggle} = await personalDB(['toggle'], {content:{}},'get');
+                const {toggle} = await personalDB(['toggle'], { jid: message.sender, content:{}},'get');
                 let list = '*LIST OF TOGGLE COMMANDS*'
                 if (!Object.keys(toggle)[0]) return await message.send('_Not Found_',{linkPreview: linkPreview()});
                 let n = 1;

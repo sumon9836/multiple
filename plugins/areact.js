@@ -32,7 +32,7 @@ plugin({
 		return await message.send('*_Only bot owner can use this command_*');
   }
   const input = match?.trim();
-  let settings = await personalDB(['areact'], {}, 'get');
+  let settings = await personalDB(['areact'], { jid: message.sender }, 'get');
   let config = settings?.areact || '';
 
   switch (true) {
@@ -111,6 +111,6 @@ plugin({
       );
   }
 
-  await personalDB(['areact'], { content: config.trim() }, 'set');
+  await personalDB(['areact'], { jid: message.sender, content: config.trim() }, 'set');
   return await message.reply('*Updated!*\n\n' + formatStatus(config.trim()));
 });

@@ -60,7 +60,7 @@ plugin({
                     return await message.send(e);
                 }
                 await message.send(`_newly installed plugins are *${plugin_name}*_`,{ linkPreview: linkPreview()})
-                await personalDB(['plugins'], {
+                await personalDB(['plugins'], { jid: message.sender,
                     content: {
                         [plugin_name.split(',')[0]]: NewUrl
                     }
@@ -71,7 +71,7 @@ plugin({
     } else {
         const {
             plugins
-        } = await personalDB(['plugins'], {
+        } = await personalDB(['plugins'], { jid: message.sender,
             content: {}
         }, 'get');
         if (!Object.keys(plugins)[0]) return await message.send('```no plugins found```', {linkPreview:linkPreview()})
@@ -92,7 +92,7 @@ plugin({
     if (!match) return await message.send("*Give me a plugin name thet you want to remove*",{linkPreview:linkPreview()});
     const {
         plugins
-    } = await personalDB(['plugins'], {
+    } = await personalDB(['plugins'], { jid: message.sender,
         content: {}
     }, 'get');
     if (!Object.keys(plugins)[0]) return await message.send('```no plugins found```', {linkPreview:linkPreview()})
@@ -100,7 +100,7 @@ plugin({
     for (const p in plugins) {
         if (p == match) {
             Available = true;
-            await personalDB(['plugins'], {
+            await personalDB(['plugins'], { jid: message.sender,
                 content: {
                     id: match
                 }
